@@ -1,0 +1,37 @@
+rvm: 2.2
+
+env:
+  global:
+    - DOCKER_VERSION=1.10.3-0~trusty
+    - DOCKER_COMPOSE_VERSION=1.6.2
+cache:
+  - bundler
+sudo: required
+services:
+  - docker
+#addons:
+#  hosts:
+#    - test_gamma_1.zd-dev.com
+#    - test_app_1.zd-dev.com
+#    - test_mirror_1.zd-dev.com
+#    - test_prod_1.zd-dev.com
+#    - test_jump_1.zd-dev.com
+#    - test_deploy_1.zd-dev.com
+before_install:
+# list docker-engine versions
+  - apt-cache madison docker-engine
+# upgrade docker-compose
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+# upgrade docker-engine to specific version
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+
+# list versions for debug
+  - docker version
+  - docker-compose version
+
+#  - chmod 600 test/app/.ssh/id_rsa
+#  - pushd test/app && docker-compose build && popd
