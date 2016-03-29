@@ -17,24 +17,18 @@ module Minitest
 
             instance_exec(&block) if block
           end
-
-          after do
-            unless ENV['NO_KILL']
-              run_command!(%w[docker-compose kill])
-            end
-          end
         end
       end
-
-      private
 
       def verbose?
         ENV['VERBOSE']
       end
 
       def wait!
+        return unless Minitest::Docker.wait_command
+
         Timeout.timeout(10) do
-          until run_command(WAIT_COMMAND).first
+          until run_command(Minitest::Docker.wait_command).first
             sleep 0.3
           end
         end
@@ -49,12 +43,9 @@ module Minitest
       end
 
       def run_command(command, env = {})
-        env = {
-          'PATH' => "#{APP_DIR.join('bin')}:#{ENV['PATH']}",
-          'COMPOSE_PROJECT_NAME' => 'test'
-        }.merge(env)
+        env = Minitest::Docker.default_env.merge(env)
 
-        Dir.chdir(APP_DIR) do
+        Dir.chdir(Minitest::Docker.app_dir) do
           command_output = ''
 
           puts "Running #{command} with #{env.inspect}" if verbose?
