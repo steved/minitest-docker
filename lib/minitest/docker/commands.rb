@@ -14,7 +14,7 @@ module Minitest
       end
 
       def stdout(output)
-        output.first.join.strip.force_encoding('UTF-8')
+        output.first.join.strip
       end
 
       module Assertions
