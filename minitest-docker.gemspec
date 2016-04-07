@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.description = 'Minitest framework for docker composition'
   gem.summary = 'Framework for creating and maintaining docker containers for Minitest test runs.'
   gem.homepage = 'https://github.com/steved/minitest-docker'
-  gem.license = 'MIT'
+  gem.license = 'Apache 2.0'
 
   gem.files = Dir.glob('lib/**/*') + ['README.md']
 
