@@ -25,7 +25,6 @@ module Minitest
 
         def refute_successful(output, msg = nil)
           msg = message(msg) { "Command exited (#{output.last}):\n#{output[0].join}\n#{output[1].join}" }
-
           refute_equal 0, output.last, msg
         end
 
