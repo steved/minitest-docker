@@ -1,0 +1,10 @@
+Port 22
+ListenAddress 0.0.0.0
+
+Protocol 2
+
+PermitRootLogin yes
+PubkeyAuthentication yes
+AuthorizedKeysFile  .ssh/authorized_keys
+PasswordAuthentication no
+ChallengeResponseAuthentication no
