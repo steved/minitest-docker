@@ -8,6 +8,9 @@ cache:
 sudo: required
 services:
   - docker
+addons:
+  hosts:
+    - test_app_1
 before_install:
 # list docker-engine versions
   - apt-cache madison docker-engine

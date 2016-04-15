@@ -11,13 +11,15 @@ module Minitest
         def compose(&block)
           before do
             puts "\ntest: #{name}" if verbose?
-            run_command!(%w[docker-compose up -d --force-recreate])
-
-            wait!
-
+            compose
             instance_exec(&block) if block
           end
         end
+      end
+
+      def compose
+        run_command!(%w[docker-compose up -d --force-recreate])
+        wait!
       end
 
       def verbose?

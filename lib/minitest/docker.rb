@@ -5,10 +5,14 @@ module Minitest
   module Docker
     class << self
       attr_accessor :wait_command
-      attr_writer :app_dir, :default_env
+      attr_writer :app_dir, :default_env, :wait_timeout
 
       def default_env
         @default_env ||= { 'COMPOSE_PROJECT_NAME' => 'test' }
+      end
+
+      def wait_timeout
+        @wait_timeout ||= 10
       end
 
       def app_dir
