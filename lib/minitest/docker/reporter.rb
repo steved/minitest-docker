@@ -21,7 +21,8 @@ module Minitest
         ::Docker::Container.all.each do |container|
           container_name = container.info['Names'].min_by(&:length)
 
-          test_name = result.name.gsub(/[^a-zA-Z0-9_.-]/, '_')
+          test_name = result.name.gsub(/[^a-zA-Z0-9_.]/, '_')
+          test_name.gsub!(/_+/, '_')
 
           tag = test_name + container_name
           container.commit.tag(repo: tag, force: true)
